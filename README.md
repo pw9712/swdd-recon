@@ -1,4 +1,6 @@
-# swdd-recon
+<p align="center">
+  <img src="docs/assets/banner_light.svg" width="100%" alt="swdd-recon: legacy AUTOSAR C code and ARXML turned into a Software Detailed Design with ports, runnables and a state machine">
+</p>
 
 **Reconstruct a Software Detailed Design (SWDD) from legacy AUTOSAR C code.**
 Static analysis extracts the facts, an LLM adds the meaning, a validator keeps the LLM honest,
