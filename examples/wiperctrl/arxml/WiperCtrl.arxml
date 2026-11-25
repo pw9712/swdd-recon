@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SWC description of WiperCtrl (AUTOSAR 4.x).
+  Hand-written for the swdd-recon example: schema-plausible, not validated
+  against the official XSD. Represents the architecture as documented in the
+  project repository (which may lag behind the code).
+-->
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_4-2-2.xsd">
+  <AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>WiperCtrl_Pkg</SHORT-NAME>
+      <AR-PACKAGES>
+
+        <!-- ================================================================ -->
+        <AR-PACKAGE>
+          <SHORT-NAME>BaseTypes</SHORT-NAME>
+          <ELEMENTS>
+            <SW-BASE-TYPE>
+              <SHORT-NAME>uint8</SHORT-NAME>
+              <CATEGORY>FIXED_LENGTH</CATEGORY>
+              <BASE-TYPE-SIZE>8</BASE-TYPE-SIZE>
+              <BASE-TYPE-ENCODING>NONE</BASE-TYPE-ENCODING>
+              <NATIVE-DECLARATION>unsigned char</NATIVE-DECLARATION>
+            </SW-BASE-TYPE>
+            <SW-BASE-TYPE>
+              <SHORT-NAME>uint16</SHORT-NAME>
+              <CATEGORY>FIXED_LENGTH</CATEGORY>
+              <BASE-TYPE-SIZE>16</BASE-TYPE-SIZE>
+              <BASE-TYPE-ENCODING>NONE</BASE-TYPE-ENCODING>
+              <NATIVE-DECLARATION>unsigned short</NATIVE-DECLARATION>
+            </SW-BASE-TYPE>
+            <SW-BASE-TYPE>
+              <SHORT-NAME>boolean</SHORT-NAME>
+              <CATEGORY>FIXED_LENGTH</CATEGORY>
+              <BASE-TYPE-SIZE>8</BASE-TYPE-SIZE>
+              <BASE-TYPE-ENCODING>BOOLEAN</BASE-TYPE-ENCODING>
+              <NATIVE-DECLARATION>unsigned char</NATIVE-DECLARATION>
+            </SW-BASE-TYPE>
+            <SW-BASE-TYPE>
+              <SHORT-NAME>void</SHORT-NAME>
+              <CATEGORY>FIXED_LENGTH</CATEGORY>
+              <BASE-TYPE-SIZE>0</BASE-TYPE-SIZE>
+              <BASE-TYPE-ENCODING>VOID</BASE-TYPE-ENCODING>
+              <NATIVE-DECLARATION>void</NATIVE-DECLARATION>
+            </SW-BASE-TYPE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+
+        <!-- ================================================================ -->
+        <AR-PACKAGE>
+          <SHORT-NAME>Units</SHORT-NAME>
+          <ELEMENTS>
+            <UNIT><SHORT-NAME>MilliAmpere</SHORT-NAME><DISPLAY-NAME>mA</DISPLAY-NAME></UNIT>
+            <UNIT><SHORT-NAME>KiloMeterPerHour</SHORT-NAME><DISPLAY-NAME>km/h</DISPLAY-NAME></UNIT>
+            <UNIT><SHORT-NAME>Percent</SHORT-NAME><DISPLAY-NAME>%</DISPLAY-NAME></UNIT>
+          </ELEMENTS>
+        </AR-PACKAGE>
+
+        <!-- ================================================================ -->
+        <AR-PACKAGE>
+          <SHORT-NAME>CompuMethods</SHORT-NAME>
+          <ELEMENTS>
+            <COMPU-METHOD>
+              <SHORT-NAME>CM_WiperPos</SHORT-NAME>
+              <CATEGORY>TEXTTABLE</CATEGORY>
+              <COMPU-INTERNAL-TO-PHYS>
+                <COMPU-SCALES>
+                  <COMPU-SCALE><LOWER-LIMIT>0</LOWER-LIMIT><UPPER-LIMIT>0</UPPER-LIMIT><COMPU-CONST><VT>WIPERPOS_OFF</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>1</LOWER-LIMIT><UPPER-LIMIT>1</UPPER-LIMIT><COMPU-CONST><VT>WIPERPOS_INT</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>2</LOWER-LIMIT><UPPER-LIMIT>2</UPPER-LIMIT><COMPU-CONST><VT>WIPERPOS_LOW</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>3</LOWER-LIMIT><UPPER-LIMIT>3</UPPER-LIMIT><COMPU-CONST><VT>WIPERPOS_HIGH</VT></COMPU-CONST></COMPU-SCALE>
+                </COMPU-SCALES>
+              </COMPU-INTERNAL-TO-PHYS>
+            </COMPU-METHOD>
+            <COMPU-METHOD>
+              <SHORT-NAME>CM_RainSensorStatus</SHORT-NAME>
+              <CATEGORY>TEXTTABLE</CATEGORY>
+              <COMPU-INTERNAL-TO-PHYS>
+                <COMPU-SCALES>
+                  <COMPU-SCALE><LOWER-LIMIT>0</LOWER-LIMIT><UPPER-LIMIT>0</UPPER-LIMIT><COMPU-CONST><VT>RAINSENSOR_OK</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>1</LOWER-LIMIT><UPPER-LIMIT>1</UPPER-LIMIT><COMPU-CONST><VT>RAINSENSOR_INIT</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>2</LOWER-LIMIT><UPPER-LIMIT>2</UPPER-LIMIT><COMPU-CONST><VT>RAINSENSOR_FAULT</VT></COMPU-CONST></COMPU-SCALE>
+                </COMPU-SCALES>
+              </COMPU-INTERNAL-TO-PHYS>
+            </COMPU-METHOD>
+            <COMPU-METHOD>
+              <SHORT-NAME>CM_PowerMode</SHORT-NAME>
+              <CATEGORY>TEXTTABLE</CATEGORY>
+              <COMPU-INTERNAL-TO-PHYS>
+                <COMPU-SCALES>
+                  <COMPU-SCALE><LOWER-LIMIT>0</LOWER-LIMIT><UPPER-LIMIT>0</UPPER-LIMIT><COMPU-CONST><VT>POWERMODE_OFF</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>1</LOWER-LIMIT><UPPER-LIMIT>1</UPPER-LIMIT><COMPU-CONST><VT>POWERMODE_ACC</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>2</LOWER-LIMIT><UPPER-LIMIT>2</UPPER-LIMIT><COMPU-CONST><VT>POWERMODE_RUN</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>3</LOWER-LIMIT><UPPER-LIMIT>3</UPPER-LIMIT><COMPU-CONST><VT>POWERMODE_CRANK</VT></COMPU-CONST></COMPU-SCALE>
+                </COMPU-SCALES>
+              </COMPU-INTERNAL-TO-PHYS>
+            </COMPU-METHOD>
+            <COMPU-METHOD>
+              <SHORT-NAME>CM_MotorSpeedCmd</SHORT-NAME>
+              <CATEGORY>TEXTTABLE</CATEGORY>
+              <COMPU-INTERNAL-TO-PHYS>
+                <COMPU-SCALES>
+                  <COMPU-SCALE><LOWER-LIMIT>0</LOWER-LIMIT><UPPER-LIMIT>0</UPPER-LIMIT><COMPU-CONST><VT>MOTORSPEED_STOP</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>1</LOWER-LIMIT><UPPER-LIMIT>1</UPPER-LIMIT><COMPU-CONST><VT>MOTORSPEED_LOW</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>2</LOWER-LIMIT><UPPER-LIMIT>2</UPPER-LIMIT><COMPU-CONST><VT>MOTORSPEED_HIGH</VT></COMPU-CONST></COMPU-SCALE>
+                </COMPU-SCALES>
+              </COMPU-INTERNAL-TO-PHYS>
+            </COMPU-METHOD>
+            <COMPU-METHOD>
+              <SHORT-NAME>CM_WiperStatus</SHORT-NAME>
+              <CATEGORY>TEXTTABLE</CATEGORY>
+              <COMPU-INTERNAL-TO-PHYS>
+                <COMPU-SCALES>
+                  <COMPU-SCALE><LOWER-LIMIT>0</LOWER-LIMIT><UPPER-LIMIT>0</UPPER-LIMIT><COMPU-CONST><VT>WIPERSTATUS_OFF</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>1</LOWER-LIMIT><UPPER-LIMIT>1</UPPER-LIMIT><COMPU-CONST><VT>WIPERSTATUS_INTERVAL</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>2</LOWER-LIMIT><UPPER-LIMIT>2</UPPER-LIMIT><COMPU-CONST><VT>WIPERSTATUS_AUTO</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>3</LOWER-LIMIT><UPPER-LIMIT>3</UPPER-LIMIT><COMPU-CONST><VT>WIPERSTATUS_LOW</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>4</LOWER-LIMIT><UPPER-LIMIT>4</UPPER-LIMIT><COMPU-CONST><VT>WIPERSTATUS_HIGH</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>5</LOWER-LIMIT><UPPER-LIMIT>5</UPPER-LIMIT><COMPU-CONST><VT>WIPERSTATUS_WASH</VT></COMPU-CONST></COMPU-SCALE>
+                  <COMPU-SCALE><LOWER-LIMIT>6</LOWER-LIMIT><UPPER-LIMIT>6</UPPER-LIMIT><COMPU-CONST><VT>WIPERSTATUS_FAULT</VT></COMPU-CONST></COMPU-SCALE>
+                </COMPU-SCALES>
+              </COMPU-INTERNAL-TO-PHYS>
+            </COMPU-METHOD>
+            <COMPU-METHOD>
+              <SHORT-NAME>CM_MotorCurrent</SHORT-NAME>
+              <DESC><L-2 L="EN">Motor current from IoHwAb, 1 mA per bit.</L-2></DESC>
+              <CATEGORY>LINEAR</CATEGORY>
+              <UNIT-REF DEST="UNIT">/WiperCtrl_Pkg/Units/MilliAmpere</UNIT-REF>
+              <COMPU-INTERNAL-TO-PHYS>
+                <COMPU-SCALES>
+                  <COMPU-SCALE>
+                    <COMPU-RATIONAL-COEFFS>
+                      <COMPU-NUMERATOR><V>0</V><V>1</V></COMPU-NUMERATOR>
+                      <COMPU-DENOMINATOR><V>1</V></COMPU-DENOMINATOR>
+                    </COMPU-RATIONAL-COEFFS>
+                  </COMPU-SCALE>
+                </COMPU-SCALES>
+              </COMPU-INTERNAL-TO-PHYS>
+            </COMPU-METHOD>
+            <COMPU-METHOD>
+              <SHORT-NAME>CM_VehSpeed</SHORT-NAME>
+              <CATEGORY>LINEAR</CATEGORY>
+              <UNIT-REF DEST="UNIT">/WiperCtrl_Pkg/Units/KiloMeterPerHour</UNIT-REF>
+              <COMPU-INTERNAL-TO-PHYS>
+                <COMPU-SCALES>
+                  <COMPU-SCALE>
+                    <COMPU-RATIONAL-COEFFS>
+                      <COMPU-NUMERATOR><V>0</V><V>1</V></COMPU-NUMERATOR>
+                      <COMPU-DENOMINATOR><V>10</V></COMPU-DENOMINATOR>
+                    </COMPU-RATIONAL-COEFFS>
+                  </COMPU-SCALE>
+                </COMPU-SCALES>
+              </COMPU-INTERNAL-TO-PHYS>
+            </COMPU-METHOD>
+            <COMPU-METHOD>
+              <SHORT-NAME>CM_Percent</SHORT-NAME>
+              <CATEGORY>IDENTICAL</CATEGORY>
+              <UNIT-REF DEST="UNIT">/WiperCtrl_Pkg/Units/Percent</UNIT-REF>
+            </COMPU-METHOD>
+          </ELEMENTS>
+        </AR-PACKAGE>
+
+        <!-- ================================================================ -->
+        <AR-PACKAGE>
+          <SHORT-NAME>DataConstrs</SHORT-NAME>
+          <ELEMENTS>
+            <DATA-CONSTR>
+              <SHORT-NAME>DC_IntLevel</SHORT-NAME>
+              <DATA-CONSTR-RULES>
+                <DATA-CONSTR-RULE>
+                  <INTERNAL-CONSTRS>
+                    <LOWER-LIMIT>1</LOWER-LIMIT>
+                    <UPPER-LIMIT>4</UPPER-LIMIT>
+                  </INTERNAL-CONSTRS>
+                </DATA-CONSTR-RULE>
+              </DATA-CONSTR-RULES>
+            </DATA-CONSTR>
+            <DATA-CONSTR>
+              <SHORT-NAME>DC_Percent</SHORT-NAME>
+              <DATA-CONSTR-RULES>
+                <DATA-CONSTR-RULE>
+                  <PHYS-CONSTRS>
+                    <LOWER-LIMIT>0</LOWER-LIMIT>
+                    <UPPER-LIMIT>100</UPPER-LIMIT>
+                  </PHYS-CONSTRS>
+                </DATA-CONSTR-RULE>
+              </DATA-CONSTR-RULES>
+            </DATA-CONSTR>
+          </ELEMENTS>
+        </AR-PACKAGE>
+
+        <!-- ================================================================ -->
+        <AR-PACKAGE>
+          <SHORT-NAME>DataTypes</SHORT-NAME>
+          <ELEMENTS>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>WiperPos_T</SHORT-NAME>
+              <CATEGORY>VALUE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/uint8</BASE-TYPE-REF>
+                <COMPU-METHOD-REF DEST="COMPU-METHOD">/WiperCtrl_Pkg/CompuMethods/CM_WiperPos</COMPU-METHOD-REF>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>IntLevel_T</SHORT-NAME>
+              <CATEGORY>VALUE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/uint8</BASE-TYPE-REF>
+                <DATA-CONSTR-REF DEST="DATA-CONSTR">/WiperCtrl_Pkg/DataConstrs/DC_IntLevel</DATA-CONSTR-REF>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>RainIntensity_T</SHORT-NAME>
+              <CATEGORY>VALUE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/uint8</BASE-TYPE-REF>
+                <COMPU-METHOD-REF DEST="COMPU-METHOD">/WiperCtrl_Pkg/CompuMethods/CM_Percent</COMPU-METHOD-REF>
+                <DATA-CONSTR-REF DEST="DATA-CONSTR">/WiperCtrl_Pkg/DataConstrs/DC_Percent</DATA-CONSTR-REF>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>RainSensorStatus_T</SHORT-NAME>
+              <CATEGORY>VALUE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/uint8</BASE-TYPE-REF>
+                <COMPU-METHOD-REF DEST="COMPU-METHOD">/WiperCtrl_Pkg/CompuMethods/CM_RainSensorStatus</COMPU-METHOD-REF>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>PowerMode_T</SHORT-NAME>
+              <CATEGORY>VALUE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/uint8</BASE-TYPE-REF>
+                <COMPU-METHOD-REF DEST="COMPU-METHOD">/WiperCtrl_Pkg/CompuMethods/CM_PowerMode</COMPU-METHOD-REF>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>MotorCurrent_T</SHORT-NAME>
+              <CATEGORY>VALUE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/uint16</BASE-TYPE-REF>
+                <COMPU-METHOD-REF DEST="COMPU-METHOD">/WiperCtrl_Pkg/CompuMethods/CM_MotorCurrent</COMPU-METHOD-REF>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>VehSpeed_T</SHORT-NAME>
+              <CATEGORY>VALUE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/uint16</BASE-TYPE-REF>
+                <COMPU-METHOD-REF DEST="COMPU-METHOD">/WiperCtrl_Pkg/CompuMethods/CM_VehSpeed</COMPU-METHOD-REF>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>MotorSpeedCmd_T</SHORT-NAME>
+              <CATEGORY>VALUE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/uint8</BASE-TYPE-REF>
+                <COMPU-METHOD-REF DEST="COMPU-METHOD">/WiperCtrl_Pkg/CompuMethods/CM_MotorSpeedCmd</COMPU-METHOD-REF>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>WiperStatus_T</SHORT-NAME>
+              <CATEGORY>VALUE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/uint8</BASE-TYPE-REF>
+                <COMPU-METHOD-REF DEST="COMPU-METHOD">/WiperCtrl_Pkg/CompuMethods/CM_WiperStatus</COMPU-METHOD-REF>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>boolean_T</SHORT-NAME>
+              <CATEGORY>VALUE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/boolean</BASE-TYPE-REF>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>uint8_T</SHORT-NAME>
+              <CATEGORY>VALUE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/uint8</BASE-TYPE-REF>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>uint16_T</SHORT-NAME>
+              <CATEGORY>VALUE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/uint16</BASE-TYPE-REF>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>Dem_EventStatusType</SHORT-NAME>
+              <CATEGORY>VALUE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/uint8</BASE-TYPE-REF>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>NvM_RequestResultType</SHORT-NAME>
+              <CATEGORY>VALUE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/uint8</BASE-TYPE-REF>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>NvM_SrcPtrType</SHORT-NAME>
+              <CATEGORY>DATA_REFERENCE</CATEGORY>
+              <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                <SW-POINTER-TARGET-PROPS>
+                  <TARGET-CATEGORY>VALUE</TARGET-CATEGORY>
+                  <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                    <BASE-TYPE-REF DEST="SW-BASE-TYPE">/WiperCtrl_Pkg/BaseTypes/void</BASE-TYPE-REF>
+                    <SW-IMPL-POLICY>CONST</SW-IMPL-POLICY>
+                  </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+                </SW-POINTER-TARGET-PROPS>
+              </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+            </IMPLEMENTATION-DATA-TYPE>
+            <IMPLEMENTATION-DATA-TYPE>
+              <SHORT-NAME>WiperCtrl_NvBlockType</SHORT-NAME>
+              <CATEGORY>STRUCTURE</CATEGORY>
+              <SUB-ELEMENTS>
+                <IMPLEMENTATION-DATA-TYPE-ELEMENT>
+                  <SHORT-NAME>WashCycleCnt</SHORT-NAME>
+                  <CATEGORY>TYPE_REFERENCE</CATEGORY>
+                  <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                    <IMPLEMENTATION-DATA-TYPE-REF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/uint16_T</IMPLEMENTATION-DATA-TYPE-REF>
+                  </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+                </IMPLEMENTATION-DATA-TYPE-ELEMENT>
+                <IMPLEMENTATION-DATA-TYPE-ELEMENT>
+                  <SHORT-NAME>BlockEventCnt</SHORT-NAME>
+                  <CATEGORY>TYPE_REFERENCE</CATEGORY>
+                  <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                    <IMPLEMENTATION-DATA-TYPE-REF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/uint8_T</IMPLEMENTATION-DATA-TYPE-REF>
+                  </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+                </IMPLEMENTATION-DATA-TYPE-ELEMENT>
+                <IMPLEMENTATION-DATA-TYPE-ELEMENT>
+                  <SHORT-NAME>Reserved</SHORT-NAME>
+                  <CATEGORY>TYPE_REFERENCE</CATEGORY>
+                  <SW-DATA-DEF-PROPS><SW-DATA-DEF-PROPS-VARIANTS><SW-DATA-DEF-PROPS-CONDITIONAL>
+                    <IMPLEMENTATION-DATA-TYPE-REF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/uint8_T</IMPLEMENTATION-DATA-TYPE-REF>
+                  </SW-DATA-DEF-PROPS-CONDITIONAL></SW-DATA-DEF-PROPS-VARIANTS></SW-DATA-DEF-PROPS>
+                </IMPLEMENTATION-DATA-TYPE-ELEMENT>
+              </SUB-ELEMENTS>
+            </IMPLEMENTATION-DATA-TYPE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+
+        <!-- ================================================================ -->
+        <AR-PACKAGE>
+          <SHORT-NAME>PortInterfaces</SHORT-NAME>
+          <ELEMENTS>
+            <SENDER-RECEIVER-INTERFACE>
+              <SHORT-NAME>StalkSwitch_I</SHORT-NAME>
+              <IS-SERVICE>false</IS-SERVICE>
+              <DATA-ELEMENTS>
+                <VARIABLE-DATA-PROTOTYPE><SHORT-NAME>WiperPos</SHORT-NAME><TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/WiperPos_T</TYPE-TREF></VARIABLE-DATA-PROTOTYPE>
+                <VARIABLE-DATA-PROTOTYPE><SHORT-NAME>IntLevel</SHORT-NAME><TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/IntLevel_T</TYPE-TREF></VARIABLE-DATA-PROTOTYPE>
+                <VARIABLE-DATA-PROTOTYPE><SHORT-NAME>WashReq</SHORT-NAME><TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/boolean_T</TYPE-TREF></VARIABLE-DATA-PROTOTYPE>
+              </DATA-ELEMENTS>
+            </SENDER-RECEIVER-INTERFACE>
+            <SENDER-RECEIVER-INTERFACE>
+              <SHORT-NAME>RainSensor_I</SHORT-NAME>
+              <IS-SERVICE>false</IS-SERVICE>
+              <DATA-ELEMENTS>
+                <VARIABLE-DATA-PROTOTYPE><SHORT-NAME>Intensity</SHORT-NAME><TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/RainIntensity_T</TYPE-TREF></VARIABLE-DATA-PROTOTYPE>
+                <VARIABLE-DATA-PROTOTYPE><SHORT-NAME>Status</SHORT-NAME><TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/RainSensorStatus_T</TYPE-TREF></VARIABLE-DATA-PROTOTYPE>
+              </DATA-ELEMENTS>
+            </SENDER-RECEIVER-INTERFACE>
+            <SENDER-RECEIVER-INTERFACE>
+              <SHORT-NAME>PowerMode_I</SHORT-NAME>
+              <IS-SERVICE>false</IS-SERVICE>
+              <DATA-ELEMENTS>
+                <VARIABLE-DATA-PROTOTYPE><SHORT-NAME>Mode</SHORT-NAME><TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/PowerMode_T</TYPE-TREF></VARIABLE-DATA-PROTOTYPE>
+              </DATA-ELEMENTS>
+            </SENDER-RECEIVER-INTERFACE>
+            <SENDER-RECEIVER-INTERFACE>
+              <SHORT-NAME>WiperMotorFb_I</SHORT-NAME>
+              <IS-SERVICE>false</IS-SERVICE>
+              <DATA-ELEMENTS>
+                <VARIABLE-DATA-PROTOTYPE><SHORT-NAME>ParkPos</SHORT-NAME><TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/boolean_T</TYPE-TREF></VARIABLE-DATA-PROTOTYPE>
+                <VARIABLE-DATA-PROTOTYPE><SHORT-NAME>Current</SHORT-NAME><TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/MotorCurrent_T</TYPE-TREF></VARIABLE-DATA-PROTOTYPE>
+              </DATA-ELEMENTS>
+            </SENDER-RECEIVER-INTERFACE>
+            <SENDER-RECEIVER-INTERFACE>
+              <SHORT-NAME>VehicleSpeed_I</SHORT-NAME>
+              <IS-SERVICE>false</IS-SERVICE>
+              <DATA-ELEMENTS>
+                <VARIABLE-DATA-PROTOTYPE><SHORT-NAME>Speed</SHORT-NAME><TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/VehSpeed_T</TYPE-TREF></VARIABLE-DATA-PROTOTYPE>
+              </DATA-ELEMENTS>
+            </SENDER-RECEIVER-INTERFACE>
+            <SENDER-RECEIVER-INTERFACE>
+              <SHORT-NAME>WiperMotorCmd_I</SHORT-NAME>
+              <IS-SERVICE>false</IS-SERVICE>
+              <DATA-ELEMENTS>
+                <VARIABLE-DATA-PROTOTYPE><SHORT-NAME>Speed</SHORT-NAME><TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/MotorSpeedCmd_T</TYPE-TREF></VARIABLE-DATA-PROTOTYPE>
+              </DATA-ELEMENTS>
+            </SENDER-RECEIVER-INTERFACE>
+            <SENDER-RECEIVER-INTERFACE>
+              <SHORT-NAME>WiperStatus_I</SHORT-NAME>
+              <IS-SERVICE>false</IS-SERVICE>
+              <DATA-ELEMENTS>
+                <VARIABLE-DATA-PROTOTYPE><SHORT-NAME>Mode</SHORT-NAME><TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/WiperStatus_T</TYPE-TREF></VARIABLE-DATA-PROTOTYPE>
+              </DATA-ELEMENTS>
+            </SENDER-RECEIVER-INTERFACE>
+
+            <CLIENT-SERVER-INTERFACE>
+              <SHORT-NAME>WasherPump_I</SHORT-NAME>
+              <IS-SERVICE>false</IS-SERVICE>
+              <OPERATIONS>
+                <CLIENT-SERVER-OPERATION>
+                  <SHORT-NAME>SetState</SHORT-NAME>
+                  <ARGUMENTS>
+                    <ARGUMENT-DATA-PROTOTYPE>
+                      <SHORT-NAME>On</SHORT-NAME>
+                      <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/boolean_T</TYPE-TREF>
+                      <DIRECTION>IN</DIRECTION>
+                    </ARGUMENT-DATA-PROTOTYPE>
+                  </ARGUMENTS>
+                </CLIENT-SERVER-OPERATION>
+              </OPERATIONS>
+            </CLIENT-SERVER-INTERFACE>
+            <CLIENT-SERVER-INTERFACE>
+              <SHORT-NAME>DiagnosticMonitor</SHORT-NAME>
+              <IS-SERVICE>true</IS-SERVICE>
+              <OPERATIONS>
+                <CLIENT-SERVER-OPERATION>
+                  <SHORT-NAME>SetEventStatus</SHORT-NAME>
+                  <ARGUMENTS>
+                    <ARGUMENT-DATA-PROTOTYPE>
+                      <SHORT-NAME>EventStatus</SHORT-NAME>
+                      <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/Dem_EventStatusType</TYPE-TREF>
+                      <DIRECTION>IN</DIRECTION>
+                    </ARGUMENT-DATA-PROTOTYPE>
+                  </ARGUMENTS>
+                  <POSSIBLE-ERROR-REFS>
+                    <POSSIBLE-ERROR-REF DEST="APPLICATION-ERROR">/WiperCtrl_Pkg/PortInterfaces/DiagnosticMonitor/E_NOT_OK</POSSIBLE-ERROR-REF>
+                  </POSSIBLE-ERROR-REFS>
+                </CLIENT-SERVER-OPERATION>
+              </OPERATIONS>
+              <POSSIBLE-ERRORS>
+                <APPLICATION-ERROR><SHORT-NAME>E_NOT_OK</SHORT-NAME><ERROR-CODE>1</ERROR-CODE></APPLICATION-ERROR>
+              </POSSIBLE-ERRORS>
+            </CLIENT-SERVER-INTERFACE>
+            <CLIENT-SERVER-INTERFACE>
+              <SHORT-NAME>NvMService</SHORT-NAME>
+              <IS-SERVICE>true</IS-SERVICE>
+              <OPERATIONS>
+                <CLIENT-SERVER-OPERATION>
+                  <SHORT-NAME>GetErrorStatus</SHORT-NAME>
+                  <ARGUMENTS>
+                    <ARGUMENT-DATA-PROTOTYPE>
+                      <SHORT-NAME>ErrorStatus</SHORT-NAME>
+                      <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/NvM_RequestResultType</TYPE-TREF>
+                      <DIRECTION>OUT</DIRECTION>
+                    </ARGUMENT-DATA-PROTOTYPE>
+                  </ARGUMENTS>
+                  <POSSIBLE-ERROR-REFS>
+                    <POSSIBLE-ERROR-REF DEST="APPLICATION-ERROR">/WiperCtrl_Pkg/PortInterfaces/NvMService/E_NOT_OK</POSSIBLE-ERROR-REF>
+                  </POSSIBLE-ERROR-REFS>
+                </CLIENT-SERVER-OPERATION>
+                <CLIENT-SERVER-OPERATION>
+                  <SHORT-NAME>WriteBlock</SHORT-NAME>
+                  <ARGUMENTS>
+                    <ARGUMENT-DATA-PROTOTYPE>
+                      <SHORT-NAME>SrcPtr</SHORT-NAME>
+                      <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/NvM_SrcPtrType</TYPE-TREF>
+                      <DIRECTION>IN</DIRECTION>
+                    </ARGUMENT-DATA-PROTOTYPE>
+                  </ARGUMENTS>
+                  <POSSIBLE-ERROR-REFS>
+                    <POSSIBLE-ERROR-REF DEST="APPLICATION-ERROR">/WiperCtrl_Pkg/PortInterfaces/NvMService/E_NOT_OK</POSSIBLE-ERROR-REF>
+                  </POSSIBLE-ERROR-REFS>
+                </CLIENT-SERVER-OPERATION>
+              </OPERATIONS>
+              <POSSIBLE-ERRORS>
+                <APPLICATION-ERROR><SHORT-NAME>E_NOT_OK</SHORT-NAME><ERROR-CODE>1</ERROR-CODE></APPLICATION-ERROR>
+              </POSSIBLE-ERRORS>
+            </CLIENT-SERVER-INTERFACE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+
+        <!-- ================================================================ -->
+        <AR-PACKAGE>
+          <SHORT-NAME>SwComponentTypes</SHORT-NAME>
+          <ELEMENTS>
+            <APPLICATION-SW-COMPONENT-TYPE>
+              <SHORT-NAME>WiperCtrl</SHORT-NAME>
+              <DESC><L-2 L="EN">Front wiper control: interval, low, high, rain sensor AUTO, wash/wipe, motor blocking protection.</L-2></DESC>
+              <PORTS>
+                <R-PORT-PROTOTYPE><SHORT-NAME>StalkSwitch</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/WiperCtrl_Pkg/PortInterfaces/StalkSwitch_I</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE><SHORT-NAME>RainSensor</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/WiperCtrl_Pkg/PortInterfaces/RainSensor_I</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE><SHORT-NAME>PowerMode</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/WiperCtrl_Pkg/PortInterfaces/PowerMode_I</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE><SHORT-NAME>WiperMotorFb</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/WiperCtrl_Pkg/PortInterfaces/WiperMotorFb_I</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE><SHORT-NAME>VehicleSpeed</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/WiperCtrl_Pkg/PortInterfaces/VehicleSpeed_I</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
+                <P-PORT-PROTOTYPE><SHORT-NAME>WiperMotorCmd</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/WiperCtrl_Pkg/PortInterfaces/WiperMotorCmd_I</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
+                <P-PORT-PROTOTYPE><SHORT-NAME>WiperStatus</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/WiperCtrl_Pkg/PortInterfaces/WiperStatus_I</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE><SHORT-NAME>WasherPump</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/WiperCtrl_Pkg/PortInterfaces/WasherPump_I</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE><SHORT-NAME>Event_MotorBlocked</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/WiperCtrl_Pkg/PortInterfaces/DiagnosticMonitor</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE><SHORT-NAME>Event_RainSensorFault</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/WiperCtrl_Pkg/PortInterfaces/DiagnosticMonitor</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE><SHORT-NAME>NvMService_WiperCfg</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/WiperCtrl_Pkg/PortInterfaces/NvMService</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR>
+                  <SHORT-NAME>WiperCtrl_IB</SHORT-NAME>
+                  <AR-TYPED-PER-INSTANCE-MEMORYS>
+                    <VARIABLE-DATA-PROTOTYPE>
+                      <SHORT-NAME>NvMirror</SHORT-NAME>
+                      <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/WiperCtrl_NvBlockType</TYPE-TREF>
+                    </VARIABLE-DATA-PROTOTYPE>
+                  </AR-TYPED-PER-INSTANCE-MEMORYS>
+                  <EVENTS>
+                    <INIT-EVENT>
+                      <SHORT-NAME>EV_Init</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/WiperCtrl_IB/RE_WiperCtrl_Init</START-ON-EVENT-REF>
+                    </INIT-EVENT>
+                    <TIMING-EVENT>
+                      <SHORT-NAME>EV_Main_10ms</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/WiperCtrl_IB/RE_WiperCtrl_MainFunction</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <TIMING-EVENT>
+                      <SHORT-NAME>EV_Background_100ms</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/WiperCtrl_IB/RE_WiperCtrl_Background</START-ON-EVENT-REF>
+                      <PERIOD>0.1</PERIOD>
+                    </TIMING-EVENT>
+                  </EVENTS>
+                  <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                  <RUNNABLES>
+
+                    <RUNNABLE-ENTITY>
+                      <SHORT-NAME>RE_WiperCtrl_Init</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>RE_WiperCtrl_Init</SYMBOL>
+                    </RUNNABLE-ENTITY>
+
+                    <RUNNABLE-ENTITY>
+                      <SHORT-NAME>RE_WiperCtrl_MainFunction</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <DATA-READ-ACCESSS>
+                        <VARIABLE-ACCESS>
+                          <SHORT-NAME>DRA_VehicleSpeed_Speed</SHORT-NAME>
+                          <ACCESSED-VARIABLE><AUTOSAR-VARIABLE-IREF>
+                            <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/VehicleSpeed</PORT-PROTOTYPE-REF>
+                            <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/WiperCtrl_Pkg/PortInterfaces/VehicleSpeed_I/Speed</TARGET-DATA-PROTOTYPE-REF>
+                          </AUTOSAR-VARIABLE-IREF></ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                      </DATA-READ-ACCESSS>
+                      <DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                        <VARIABLE-ACCESS>
+                          <SHORT-NAME>DRP_StalkSwitch_WiperPos</SHORT-NAME>
+                          <ACCESSED-VARIABLE><AUTOSAR-VARIABLE-IREF>
+                            <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/StalkSwitch</PORT-PROTOTYPE-REF>
+                            <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/WiperCtrl_Pkg/PortInterfaces/StalkSwitch_I/WiperPos</TARGET-DATA-PROTOTYPE-REF>
+                          </AUTOSAR-VARIABLE-IREF></ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                        <VARIABLE-ACCESS>
+                          <SHORT-NAME>DRP_StalkSwitch_IntLevel</SHORT-NAME>
+                          <ACCESSED-VARIABLE><AUTOSAR-VARIABLE-IREF>
+                            <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/StalkSwitch</PORT-PROTOTYPE-REF>
+                            <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/WiperCtrl_Pkg/PortInterfaces/StalkSwitch_I/IntLevel</TARGET-DATA-PROTOTYPE-REF>
+                          </AUTOSAR-VARIABLE-IREF></ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                        <VARIABLE-ACCESS>
+                          <SHORT-NAME>DRP_StalkSwitch_WashReq</SHORT-NAME>
+                          <ACCESSED-VARIABLE><AUTOSAR-VARIABLE-IREF>
+                            <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/StalkSwitch</PORT-PROTOTYPE-REF>
+                            <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/WiperCtrl_Pkg/PortInterfaces/StalkSwitch_I/WashReq</TARGET-DATA-PROTOTYPE-REF>
+                          </AUTOSAR-VARIABLE-IREF></ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                        <VARIABLE-ACCESS>
+                          <SHORT-NAME>DRP_RainSensor_Intensity</SHORT-NAME>
+                          <ACCESSED-VARIABLE><AUTOSAR-VARIABLE-IREF>
+                            <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/RainSensor</PORT-PROTOTYPE-REF>
+                            <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/WiperCtrl_Pkg/PortInterfaces/RainSensor_I/Intensity</TARGET-DATA-PROTOTYPE-REF>
+                          </AUTOSAR-VARIABLE-IREF></ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                        <VARIABLE-ACCESS>
+                          <SHORT-NAME>DRP_RainSensor_Status</SHORT-NAME>
+                          <ACCESSED-VARIABLE><AUTOSAR-VARIABLE-IREF>
+                            <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/RainSensor</PORT-PROTOTYPE-REF>
+                            <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/WiperCtrl_Pkg/PortInterfaces/RainSensor_I/Status</TARGET-DATA-PROTOTYPE-REF>
+                          </AUTOSAR-VARIABLE-IREF></ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                        <VARIABLE-ACCESS>
+                          <SHORT-NAME>DRP_PowerMode_Mode</SHORT-NAME>
+                          <ACCESSED-VARIABLE><AUTOSAR-VARIABLE-IREF>
+                            <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/PowerMode</PORT-PROTOTYPE-REF>
+                            <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/WiperCtrl_Pkg/PortInterfaces/PowerMode_I/Mode</TARGET-DATA-PROTOTYPE-REF>
+                          </AUTOSAR-VARIABLE-IREF></ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                        <VARIABLE-ACCESS>
+                          <SHORT-NAME>DRP_WiperMotorFb_ParkPos</SHORT-NAME>
+                          <ACCESSED-VARIABLE><AUTOSAR-VARIABLE-IREF>
+                            <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/WiperMotorFb</PORT-PROTOTYPE-REF>
+                            <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/WiperCtrl_Pkg/PortInterfaces/WiperMotorFb_I/ParkPos</TARGET-DATA-PROTOTYPE-REF>
+                          </AUTOSAR-VARIABLE-IREF></ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                        <VARIABLE-ACCESS>
+                          <SHORT-NAME>DRP_WiperMotorFb_Current</SHORT-NAME>
+                          <ACCESSED-VARIABLE><AUTOSAR-VARIABLE-IREF>
+                            <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/WiperMotorFb</PORT-PROTOTYPE-REF>
+                            <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/WiperCtrl_Pkg/PortInterfaces/WiperMotorFb_I/Current</TARGET-DATA-PROTOTYPE-REF>
+                          </AUTOSAR-VARIABLE-IREF></ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                      </DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                      <DATA-SEND-POINTS>
+                        <VARIABLE-ACCESS>
+                          <SHORT-NAME>DSP_WiperMotorCmd_Speed</SHORT-NAME>
+                          <ACCESSED-VARIABLE><AUTOSAR-VARIABLE-IREF>
+                            <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/WiperMotorCmd</PORT-PROTOTYPE-REF>
+                            <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/WiperCtrl_Pkg/PortInterfaces/WiperMotorCmd_I/Speed</TARGET-DATA-PROTOTYPE-REF>
+                          </AUTOSAR-VARIABLE-IREF></ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                        <VARIABLE-ACCESS>
+                          <SHORT-NAME>DSP_WiperStatus_Mode</SHORT-NAME>
+                          <ACCESSED-VARIABLE><AUTOSAR-VARIABLE-IREF>
+                            <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/WiperStatus</PORT-PROTOTYPE-REF>
+                            <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/WiperCtrl_Pkg/PortInterfaces/WiperStatus_I/Mode</TARGET-DATA-PROTOTYPE-REF>
+                          </AUTOSAR-VARIABLE-IREF></ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                      </DATA-SEND-POINTS>
+                      <PARAMETER-ACCESSS>
+                        <PARAMETER-ACCESS>
+                          <SHORT-NAME>PA_RainThreshold</SHORT-NAME>
+                          <ACCESSED-PARAMETER>
+                            <LOCAL-PARAMETER-REF DEST="PARAMETER-DATA-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/WiperCtrl_IB/RainThreshold</LOCAL-PARAMETER-REF>
+                          </ACCESSED-PARAMETER>
+                        </PARAMETER-ACCESS>
+                      </PARAMETER-ACCESSS>
+                      <SERVER-CALL-POINTS>
+                        <SYNCHRONOUS-SERVER-CALL-POINT>
+                          <SHORT-NAME>SCP_WasherPump_SetState</SHORT-NAME>
+                          <OPERATION-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/WasherPump</CONTEXT-R-PORT-REF>
+                            <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/WiperCtrl_Pkg/PortInterfaces/WasherPump_I/SetState</TARGET-REQUIRED-OPERATION-REF>
+                          </OPERATION-IREF>
+                          <TIMEOUT>0</TIMEOUT>
+                        </SYNCHRONOUS-SERVER-CALL-POINT>
+                      </SERVER-CALL-POINTS>
+                      <SYMBOL>RE_WiperCtrl_MainFunction</SYMBOL>
+                    </RUNNABLE-ENTITY>
+
+                    <RUNNABLE-ENTITY>
+                      <SHORT-NAME>RE_WiperCtrl_Background</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SERVER-CALL-POINTS>
+                        <SYNCHRONOUS-SERVER-CALL-POINT>
+                          <SHORT-NAME>SCP_Event_MotorBlocked_SetEventStatus</SHORT-NAME>
+                          <OPERATION-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/Event_MotorBlocked</CONTEXT-R-PORT-REF>
+                            <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/WiperCtrl_Pkg/PortInterfaces/DiagnosticMonitor/SetEventStatus</TARGET-REQUIRED-OPERATION-REF>
+                          </OPERATION-IREF>
+                          <TIMEOUT>0</TIMEOUT>
+                        </SYNCHRONOUS-SERVER-CALL-POINT>
+                        <SYNCHRONOUS-SERVER-CALL-POINT>
+                          <SHORT-NAME>SCP_Event_RainSensorFault_SetEventStatus</SHORT-NAME>
+                          <OPERATION-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/Event_RainSensorFault</CONTEXT-R-PORT-REF>
+                            <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/WiperCtrl_Pkg/PortInterfaces/DiagnosticMonitor/SetEventStatus</TARGET-REQUIRED-OPERATION-REF>
+                          </OPERATION-IREF>
+                          <TIMEOUT>0</TIMEOUT>
+                        </SYNCHRONOUS-SERVER-CALL-POINT>
+                        <SYNCHRONOUS-SERVER-CALL-POINT>
+                          <SHORT-NAME>SCP_NvMService_WiperCfg_GetErrorStatus</SHORT-NAME>
+                          <OPERATION-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/NvMService_WiperCfg</CONTEXT-R-PORT-REF>
+                            <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/WiperCtrl_Pkg/PortInterfaces/NvMService/GetErrorStatus</TARGET-REQUIRED-OPERATION-REF>
+                          </OPERATION-IREF>
+                          <TIMEOUT>0</TIMEOUT>
+                        </SYNCHRONOUS-SERVER-CALL-POINT>
+                        <SYNCHRONOUS-SERVER-CALL-POINT>
+                          <SHORT-NAME>SCP_NvMService_WiperCfg_WriteBlock</SHORT-NAME>
+                          <OPERATION-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/WiperCtrl_Pkg/SwComponentTypes/WiperCtrl/NvMService_WiperCfg</CONTEXT-R-PORT-REF>
+                            <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/WiperCtrl_Pkg/PortInterfaces/NvMService/WriteBlock</TARGET-REQUIRED-OPERATION-REF>
+                          </OPERATION-IREF>
+                          <TIMEOUT>0</TIMEOUT>
+                        </SYNCHRONOUS-SERVER-CALL-POINT>
+                      </SERVER-CALL-POINTS>
+                      <SYMBOL>RE_WiperCtrl_Background</SYMBOL>
+                    </RUNNABLE-ENTITY>
+
+                  </RUNNABLES>
+                  <SHARED-PARAMETERS>
+                    <PARAMETER-DATA-PROTOTYPE>
+                      <SHORT-NAME>RainThreshold</SHORT-NAME>
+                      <DESC><L-2 L="EN">AUTO mode: minimum effective rain intensity that triggers wiping [%].</L-2></DESC>
+                      <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/WiperCtrl_Pkg/DataTypes/RainIntensity_T</TYPE-TREF>
+                      <INIT-VALUE>
+                        <NUMERICAL-VALUE-SPECIFICATION><VALUE>10</VALUE></NUMERICAL-VALUE-SPECIFICATION>
+                      </INIT-VALUE>
+                    </PARAMETER-DATA-PROTOTYPE>
+                  </SHARED-PARAMETERS>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </APPLICATION-SW-COMPONENT-TYPE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>
